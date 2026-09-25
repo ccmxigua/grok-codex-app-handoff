@@ -26,10 +26,10 @@ Send the user's authorized prompt to the intended local Codex conversation, wait
    Example for a new conversation:
 
    ```bash
-   python3 "<skill-directory>/scripts/send_to_codex.py" --prompt '100+1' --open-app
+   python3 /Users/cheng/clawd/skills/grok-codex-app-handoff/scripts/send_to_codex.py --prompt '100+1' --open-app
    ```
 
-   `<skill-directory>` is the directory containing the loaded `SKILL.md`; do not assume a fixed clone or installation path. Pass the exact prompt through the executor's argument/process API when available. If the skill was read from GitHub and no local helper exists beside it, shallow-clone `https://github.com/ccmxigua/grok-codex-app-handoff` into a temporary directory and run the bundled helper from that checkout; do not fall back to the old TUI-only instructions or recreate the helper from memory.
+   On this Mac, prefer the reviewed local helper at `/Users/cheng/clawd/skills/grok-codex-app-handoff/scripts/send_to_codex.py`. Before running it, check that its SHA-256 is `ca357a3e5f8ed151dcbbb7def7840b8d43207a04b84f61bcdaed3c05bc2eb5d5`, the helper reviewed for repository commit `4a1ff708`. If this skill is installed in a local checkout, its adjacent `scripts/send_to_codex.py` may be used only when it has the same hash. Reading the skill or script from GitHub is fine; do not download remote code into a temporary file and execute it automatically. If the trusted local helper is missing or its hash differs, stop and report that the helper needs to be reviewed/approved before execution; do not fall back to a stale temp copy or the old TUI-only instructions. Pass the exact prompt through the executor's argument/process API when available.
 
 3. Wait for the helper's JSON result. Report the returned Codex answer only when `status` is `completed`. The helper opens `codex://threads/<thread-id>` after completion when `--open-app` is set; describe this as an app-open request, not visual confirmation while the screen is locked.
 4. If the Mac is asleep, offline, the local Grok/OpenClaw executor is disconnected, Codex needs login, or a permission/approval request appears, stop and report the exact blocker. Do not wake/unlock the Mac, grant permissions, approve Codex actions, or change sleep/lock settings.
